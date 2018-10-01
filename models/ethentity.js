@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
   EthEntity.prototype.refreshTransactionData = async function() {
     var txData = await etherscan.getTxList({
       address: this.address,
-      startblock: 6000000, // Optional
+      startblock: 0, // Optional
       endblock: 0, // Optional
       sort: 'desc' // Optional, default 'asc'
     });

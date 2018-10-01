@@ -20,11 +20,17 @@ block content
 						div.col-md-6(style="padding-top: 34px")
 							div.form-check.form-check-inline
 								label.form-check-label
-									input(name="eth_amount_op" type="radio" value="0" checked="checked")#eth_amount_op_lt.form-check-input
+									if(!tx_op || parseInt(tx_op) == 0)
+										input(name="eth_amount_op" type="radio" value="0" checked="checked")#eth_amount_op_lt.form-check-input
+									else
+										input(name="eth_amount_op" type="radio" value="0")#eth_amount_op_lt.form-check-input
 									| less than
 							div.form-check.form-check-inline
 								label.form-check-label
-									input(name="eth_amount_op" type="radio" value="1")#eth_amount_op_gt.form-check-input
+									if(tx_op && parseInt(tx_op) == 1)
+										input(name="eth_amount_op" type="radio" value="1" checked="checked")#eth_amount_op_gt.form-check-input
+									else
+										input(name="eth_amount_op" type="radio" value="1")#eth_amount_op_gt.form-check-input
 									| greater than
 					div.form-group
 						input(type="submit").btn.btn-primary
@@ -34,7 +40,7 @@ block content
 			div.col-md-12
 				div.alert.alert-success
 					h4 Search Results for !{ethentity.address}
-					p: label This wallet has a balance of !{ethentity.balance}
+					p: label This wallet has a balance of !{ethentity.balance} Wei
 					p: label There are !{transactions.length} transactions
 					if(transactions.length >= 1000)
 						p.text-warning: strong **Results are limited to the 1000 most recent transactions.
@@ -47,17 +53,14 @@ block content
 					th From 
 					th To
 					th Value
-					th
 			tbody
 				each tx,i in transactions
 					tr
 						td !{tx.blockNumber}
 						td !{tx.TxSent.address}
 						td !{tx.TxReceived.address}
-						td !{tx.value}
-						td
-							a(href="/details") Details
-						
+						td !{tx.value} Wei
+												
 	else		
 		div.row
 			div.col-md-12

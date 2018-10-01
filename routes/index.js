@@ -40,9 +40,11 @@ router.get('/', async function(req, res, next) {
 	}
 
 	if(req.query.eth_tx_amount){
-		var amtOp = (parseInt(req.query.eth_tx_amount) == 0 ? db.Sequelize.Op.gt : db.Sequelize.Op.lt);
+		var amtOp = (parseInt(req.query.eth_amount_op) == 0 ? db.Sequelize.Op.lt : db.Sequelize.Op.gt);
 		transParams.value = { [amtOp]: parseInt(req.query.eth_tx_amount) }
+
 		params.tx_amt = req.query.eth_tx_amount;
+		params.tx_op = req.query.eth_amount_op;
 	}
 	
 	var includeParams = [{ model: db.EthEntity, as: 'TxReceived' },{ model: db.EthEntity, as: 'TxSent' }];
