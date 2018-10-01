@@ -1,0 +1,64 @@
+extends layout
+
+block content
+	div.row
+		div.col-md-12
+			div.alert.alert-info
+				form#search-form(method="GET" action="/")
+					div.row
+						div.col-md-12.form-group
+							label Wallet Address
+							input(name="eth_address" type="text" value="#{eth_address}" placeholder="Enter an Address")#eth_address-input.form-control 
+					div.row
+						div.col-md-12.form-group
+							label Minimum (Oldest) Block
+							input(name="eth_from_block" type="number" value="#{blockNumber}" placeholder="Enter an Block Height")#eth_from_block-input.form-control
+					div.row
+						div.form-group.col-md-6
+							label Transaction Amount
+							input(name="eth_tx_amount" type="number" placeholder="Enter an Amount" value="#{tx_amt}")#eth_tx_amount-input.form-control
+						div.col-md-6(style="padding-top: 34px")
+							div.form-check.form-check-inline
+								label.form-check-label
+									input(name="eth_amount_op" type="radio" value="0" checked="checked")#eth_amount_op_lt.form-check-input
+									| less than
+							div.form-check.form-check-inline
+								label.form-check-label
+									input(name="eth_amount_op" type="radio" value="1")#eth_amount_op_gt.form-check-input
+									| greater than
+					div.form-group
+						input(type="submit").btn.btn-primary
+
+	if(ethentity)
+		div.row
+			div.col-md-12
+				div.alert.alert-success
+					h4 Search Results for !{ethentity.address}
+					p: label This wallet has a balance of !{ethentity.balance}
+					p: label There are !{transactions.length} transactions
+		div.row
+				div.col-md-12
+		table.table
+			thead
+				tr
+					th Block Height
+					th From 
+					th To
+					th Value
+					th
+			tbody
+				each tx,i in transactions
+					tr
+						td !{tx.blockNumber}
+						td !{tx.TxSent.address}
+						td !{tx.TxReceived.address}
+						td !{tx.value}
+						td
+							a(href="/details") Details
+						
+	else		
+		div.row
+			div.col-md-12
+				div.alert.alert-warning
+					h4 Search Results
+					p Search for an address!
