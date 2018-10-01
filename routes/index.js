@@ -64,7 +64,10 @@ router.get('/addresses/:eth_address', async function(req, res, next) {
 	var responseObj = {
 		address: params.eth_address,
 		wallet: params.ethentity,
-		transactions: params.transactions
+		transactions: {
+			count: (params.transactions ? params.transactions.length : 0),
+			data: params.transactions
+		}
 	}
 
 	res.json(responseObj);
