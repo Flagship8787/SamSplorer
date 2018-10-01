@@ -62,17 +62,15 @@ module.exports = (sequelize, DataTypes) => {
           otherEntity = ethentity
         }).catch(error => { console.log('caught', error.message); });
 
-        await db.Transaction.create({
-          value: txData[i].value,
-          fromId: (sentBy ? this.id : otherEntity.id),
-          toId: (!sentBy ? this.id : otherEntity.id),
-          blockNumber: txData[i].blockNumber,
-          blockHash: txData[i].blockHash,
-          gas: txData[i].gas,
-          gasPrice: txData[i].gasPrice,
-          gasUsed: txData[i].gasUsed,
-          confirmations: txData[i].confirmations
-        });
+        var self = this;
+        var txDataObj = txData[i];
+        
+        txDataObj.senderId    = (sentBy ? self.id : otherEntity.id);
+        txDataObj.recipientId = (!sentBy ? self.id : otherEntity.id);
+
+        await db.Transaction.findOrCreate({ where: { hash: txData[i].hash } }).spread(async function(txObj, created) {
+          txObj.updateAttributesWithData(txDataObj);
+        }).catch(error => { console.log('caught', error.message); });
       }
     }
 

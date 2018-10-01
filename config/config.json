@@ -3,14 +3,14 @@
     "username": "postgres",
     "password": "P@ssw0rd",
     "database": "txstudios_SamSplorer",
-    "host": "192.168.24.40",
+    "host": "127.0.0.1",
     "dialect": "postgresql"
   },
   "test": {
     "username": "postgres",
     "password": "P@ssw0rd",
     "database": "txstudios_SamSplorer_test",
-    "host": "192.168.24.40",
+    "host": "127.0.0.1",
     "dialect": "postgresql",
     "logging": false
   },
