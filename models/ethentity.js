@@ -34,14 +34,14 @@ module.exports = (sequelize, DataTypes) => {
   EthEntity.prototype.refreshTransactionData = async function() {
     var txData = await etherscan.getTxList({
       address: this.address,
-      startblock: 0, // Optional
+      startblock: 6000000, // Optional
       endblock: 0, // Optional
       sort: 'desc' // Optional, default 'asc'
     });
 
     const db = require('./index');
 
-    for(var i = 0 ; i < txData.length ; i++){
+    for(var i = 0 ; i < (txData.length > 1000 ? 1000 : txData.length) ; i++){
       var found = false;
 
       await db.Transaction.findAll({ where: { hash: txData[i].hash } }).then((transactions) => {
