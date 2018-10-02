@@ -18,11 +18,14 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Transaction.associate = function(models) {
-    // associations can be defined here
+    //  belongs to two ethentities (wallets/contracts), one as sender some as receiver
     Transaction.belongsTo(models.EthEntity, { as: 'TxReceived', foreignKey: "toId" });
     Transaction.belongsTo(models.EthEntity, { as: 'TxSent', foreignKey: "fromId" });
   };
 
+  //
+  //  Update model values using data from JSON
+  //
   Transaction.prototype.updateAttributesWithData = async function(txDataObj) {
     this.value          = txDataObj.value;
     this.fromId         = txDataObj.senderId;

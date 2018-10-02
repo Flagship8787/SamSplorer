@@ -6,6 +6,9 @@ const etherscan = new Etherscan('M9UPFJB5IN4TP42XT2CGNQB1JP5HIW9MEF');
 
 const db = require('../models/index');
 
+//
+//	Get data and transactions from form/api params
+//
 var responseParamsFromRequest = async function(req){
 	console.log("Request params: " + JSON.stringify(req.params));
 	console.log("Request query: " + JSON.stringify(req.query));
@@ -54,7 +57,9 @@ var responseParamsFromRequest = async function(req){
 	return params;
 }
 
-/* GET home page. */
+//
+//	Api method for fetching address data
+//
 router.get('/addresses/:eth_address', async function(req, res, next) {
 	console.log("Executing Address query Function for address " + req.params.eth_address + "!");
 
@@ -73,20 +78,9 @@ router.get('/addresses/:eth_address', async function(req, res, next) {
 	res.json(responseObj);
 });
 
-// router.get('/transactions/:txhash', async function(req, res, next) {
-// 	console.log("Executing Transactions query Function for txhash " + req.params.txhash + "!");
-	
-// 	var responseObj = {};
-// 	etherscan.getTxInfo({
-//       txhash: req.params.txhash
-//     }).then(async function(txData){
-//       console.log("Got Tx data!");
-//       console.log(JSON.stringify(txData));
-//     });
-
-// 	res.json(responseObj);
-// });
-
+//
+//	Graphical home page and form handler.  Does the same as the API method
+//
 router.get('/', async function(req, res, next) {
 	console.log("Executing Index Function!");
 
