@@ -1,0 +1,23 @@
+doctype html
+html
+	head
+		title= title
+
+		link(rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css")
+
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		div.container
+			div.row
+				div.col-md-12
+					header#page-header
+						h1.float-left SamSplorer
+						span.float-right Welcome Sam's Eth chain explorer
+						br(style="clear:both")
+			section#content-section
+				block content
+			nav#footer-section.navbar.fixed-bottom.navbar-light.bg-light
+				h4.float-left © TxStudios, 2018
+				br(style="clear:both")
+						
+
